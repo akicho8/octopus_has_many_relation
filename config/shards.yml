@@ -1,0 +1,41 @@
+default: &default
+  adapter: sqlite3
+  pool: 5
+  timeout: 5000
+
+octopus:
+  replicated: true
+  fully_replicated: true
+  environments:
+    - development
+    - test
+  development:
+    blue:
+      database: db/blue_development.sqlite3
+      <<: *default
+      slave_group_blue:
+        slave1:
+          database: db/blue_development.sqlite3
+          <<: *default
+    green:
+      database: db/green_development.sqlite3
+      <<: *default
+      slave_group_green:
+        slave2:
+          database: db/green_development.sqlite3
+          <<: *default
+  test:
+    blue:
+      database: db/blue_test.sqlite3
+      <<: *default
+      slave_group_blue:
+        slave1:
+          database: db/blue_test.sqlite3
+          <<: *default
+    green:
+      database: db/green_test.sqlite3
+      <<: *default
+      slave_group_green:
+        slave2:
+          database: db/green_test.sqlite3
+          <<: *default

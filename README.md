@@ -1,0 +1,4 @@
+# Setup
+
+    bin/setup
+    rake
